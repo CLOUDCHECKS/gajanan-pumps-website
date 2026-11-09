@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { EnquiryProvider } from "@/components/providers/EnquiryProvider";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -11,7 +8,8 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.gajananpumps.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -64,22 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={manrope.variable}>
-      <body>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-brand-yellow focus:px-5 focus:py-3 focus:text-sm focus:font-bold focus:text-navy-900"
-        >
-          Skip to content
-        </a>
-        <EnquiryProvider>
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-        </EnquiryProvider>
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

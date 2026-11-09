@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { industries } from "@/lib/industries";
+import { featuredIndustries } from "@/lib/industries";
 import { IndustryGlyph } from "@/components/ui/IndustryGlyph";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -31,11 +31,11 @@ export function Industries() {
           </Reveal>
 
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6 lg:gap-2">
-            {industries.map((industry, index) => (
+            {featuredIndustries.map((industry, index) => (
               <Reveal key={industry.slug} delay={index * 55}>
                 <Link
                   id={`industry-${industry.slug}`}
-                  href="/industries"
+                  href={`/industries/${industry.slug}`}
                   aria-label={`${industry.name} — explore industry solutions`}
                   className="group relative block h-[232px] scroll-mt-28 overflow-hidden rounded-[18px] border border-[#1B5794]/80 bg-navy-800 transition-all duration-500 ease-premium hover:-translate-y-1 hover:border-brand-yellow/80 focus-visible:ring-offset-navy-900 sm:h-[250px] lg:h-[300px] lg:-skew-x-[7deg] lg:rounded-[14px] xl:h-[318px] 2xl:h-[336px]"
                 >

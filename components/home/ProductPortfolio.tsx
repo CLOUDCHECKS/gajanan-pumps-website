@@ -1,16 +1,11 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { products } from "@/lib/products";
-import { useEnquiry } from "@/components/providers/EnquiryProvider";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 export function ProductPortfolio() {
-  const { openEnquiry } = useEnquiry();
-
   return (
     <section
       id="products"
@@ -45,18 +40,12 @@ export function ProductPortfolio() {
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 xl:gap-[9px]">
                 {products.map((product, index) => (
                   <Reveal key={product.slug} delay={index * 45}>
-                    <button
-                      type="button"
+                    <Link
+                      href={`/products/${product.slug}`}
                       id={`product-${product.slug}`}
-                      onClick={() =>
-                        openEnquiry({
-                          product: product.name,
-                          source: `product-card-${product.slug}`,
-                        })
-                      }
-                      aria-label={`Enquire about ${product.code}${
+                      aria-label={`View ${product.code}${
                         product.subtitle ? ` — ${product.subtitle}` : ""
-                      }`}
+                      } product details`}
                       className={cn(
                         "group flex h-full w-full scroll-mt-28 flex-col items-center rounded-xl bg-brand-mist px-2 pb-3 pt-2 text-center transition-all duration-400 ease-premium hover:-translate-y-1 hover:bg-[#E3EEF9] hover:shadow-card focus-visible:ring-offset-white",
                       )}
@@ -92,7 +81,7 @@ export function ProductPortfolio() {
                           {product.subtitle}
                         </span>
                       )}
-                    </button>
+                    </Link>
                   </Reveal>
                 ))}
               </div>

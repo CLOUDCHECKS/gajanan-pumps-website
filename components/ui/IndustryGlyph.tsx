@@ -46,6 +46,65 @@ function ExtruderIcon({ className }: IconProps) {
   );
 }
 
+function MineralIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M2.5 21h19" />
+      <path d="M4 6.5h16l-2.2 10H6.2L4 6.5Z" />
+      <path d="M8.5 6.5 10 2.5h4l1.5 4M8.5 11h7" />
+      <circle cx="8" cy="19.5" r="1.6" />
+      <circle cx="16" cy="19.5" r="1.6" />
+    </svg>
+  );
+}
+
+function TextileIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M6 3h12v18H6z" />
+      <path d="M6 6.5h12M6 17.5h12M9 3v18M15 3v18" />
+      <path d="M3 7.5h3M3 16.5h3M18 7.5h3M18 16.5h3" />
+    </svg>
+  );
+}
+
+function DosingIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M9 3h6M10 3v5.5L6.5 15a3.5 3.5 0 0 0 3.2 5h4.6a3.5 3.5 0 0 0 3.2-5L14 8.5V3" />
+      <path d="M8.2 15.5h7.6M12 18.5h.01" />
+      <path d="M21 4v4M19 6h4M3 4v4M1 6h4" />
+    </svg>
+  );
+}
+
 export function IndustryGlyph({
   icon,
   className = "h-6 w-6",
@@ -123,5 +182,11 @@ export function IndustryGlyph({
       return <DerrickIcon className={className} />;
     case "namkeen":
       return <ExtruderIcon className={className} />;
+    case "mineral":
+      return <MineralIcon className={className} />;
+    case "textile":
+      return <TextileIcon className={className} />;
+    case "dosing":
+      return <DosingIcon className={className} />;
   }
 }

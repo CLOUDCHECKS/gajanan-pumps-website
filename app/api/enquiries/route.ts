@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { enquirySchema } from "@/lib/validation";
-import { getSupabaseServerClient } from "@/lib/supabase";
+import { getSupabaseServerClient } from "@/lib/supabase/public";
 
 export const runtime = "nodejs";
 
@@ -38,6 +38,11 @@ async function persistLocally(record: Record<string, unknown>) {
     return false;
   }
 }
+
+const clean = (value?: string) => {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
+};
 
 export async function POST(request: NextRequest) {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -85,8 +90,24 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const data = parsed.data;
+
   const record = {
-    ...parsed.data,
+    name: data.name,
+    company: clean(data.company),
+    email: data.email,
+    phone: data.phone,
+    product: clean(data.product),
+    industry: clean(data.industry),
+    application: clean(data.application),
+    city: clean(data.city),
+    state: clean(data.state),
+    flow_rate: clean(data.flowRate),
+    pressure: clean(data.pressure),
+    viscosity: clean(data.viscosity),
+    temperature: clean(data.temperature),
+    timeline: clean(data.timeline),
+    message: data.message,
     source:
       typeof payload.source === "string"
         ? payload.source.slice(0, 80)

@@ -13,11 +13,16 @@ import { EnquiryModal } from "@/components/ui/EnquiryModal";
 type EnquiryState = {
   open: boolean;
   product?: string;
+  industry?: string;
   source?: string;
 };
 
 type EnquiryContextValue = {
-  openEnquiry: (options?: { product?: string; source?: string }) => void;
+  openEnquiry: (options?: {
+    product?: string;
+    industry?: string;
+    source?: string;
+  }) => void;
   closeEnquiry: () => void;
 };
 
@@ -27,7 +32,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<EnquiryState>({ open: false });
 
   const openEnquiry = useCallback(
-    (options?: { product?: string; source?: string }) => {
+    (options?: { product?: string; industry?: string; source?: string }) => {
       setState({ open: true, ...options });
     },
     [],
@@ -48,6 +53,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
       <EnquiryModal
         open={state.open}
         product={state.product}
+        industry={state.industry}
         source={state.source}
         onClose={closeEnquiry}
       />

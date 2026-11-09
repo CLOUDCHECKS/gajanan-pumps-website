@@ -55,7 +55,7 @@ export function SearchDialog({
         ? `${product.code} — ${product.subtitle}`
         : product.name,
       meta: "Product",
-      href: `/#product-${product.slug}`,
+      href: `/products/${product.slug}`,
       kind: "product",
       image: product.image,
     }));
@@ -64,7 +64,7 @@ export function SearchDialog({
       id: `industry-${industry.slug}`,
       label: industry.name,
       meta: "Industry",
-      href: `/#industry-${industry.slug}`,
+      href: `/industries/${industry.slug}`,
       kind: "industry",
     }));
 

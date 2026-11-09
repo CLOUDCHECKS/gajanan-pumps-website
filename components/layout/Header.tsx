@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -11,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { industries } from "@/lib/industries";
 import { mainNav, type NavLink } from "@/lib/navigation";
 import { Logo } from "@/components/ui/Logo";
 import { useEnquiry } from "@/components/providers/EnquiryProvider";
@@ -53,6 +55,11 @@ export function Header() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  const currentIndustry = industries.find(
+    (industry) => pathname === `/industries/${industry.slug}`,
+  );
+  const isIndustryRoute = pathname.startsWith("/industries");
+
   return (
     <>
       <header
@@ -64,11 +71,22 @@ export function Header() {
         )}
       >
         <div className="shell flex h-[76px] items-center gap-4 xl:gap-6">
-          <Logo priority />
+          <div className="flex shrink-0 items-center gap-2.5">
+            <Image
+              src="/images/brand/monogram-gold.png"
+              alt=""
+              aria-hidden="true"
+              width={640}
+              height={535}
+              priority
+              className="h-8 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] xl:h-10"
+            />
+            <Logo priority />
+          </div>
 
-          <div className="hidden items-center gap-5 xl:flex">
+          <div className="hidden shrink-0 items-center gap-5 min-[1600px]:flex">
             <span aria-hidden="true" className="h-11 w-px bg-white/25" />
-            <p className="text-[14px] italic leading-[1.2] text-white/90">
+            <p className="whitespace-nowrap text-[14px] italic leading-[1.2] text-white/90">
               Moving Fluids
               <br />
               Positively
@@ -77,7 +95,7 @@ export function Header() {
 
           <nav
             aria-label="Primary"
-            className="ml-auto hidden items-center gap-4 lg:flex xl:gap-6 2xl:gap-8"
+            className="ml-auto hidden items-center gap-4 xl:flex xl:gap-5 2xl:gap-8"
           >
             {mainNav.map((item) => (
               <div key={item.label} className="group relative">
@@ -126,22 +144,29 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-2 lg:ml-6 xl:ml-[86px] xl:gap-4">
+          <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-6 xl:gap-4 2xl:ml-[86px]">
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
               aria-label="Search the website"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white/85 transition hover:bg-white/10 hover:text-white"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white/85 transition hover:bg-white/10 hover:text-white"
             >
               <Search className="h-[19px] w-[19px]" />
             </button>
 
             <button
               type="button"
-              onClick={() => openEnquiry({ source: "header" })}
-              className="hidden h-10 items-center gap-2 rounded-full bg-brand-yellow px-5 text-[13px] font-extrabold text-navy-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-yellow-soft sm:inline-flex"
+              onClick={() =>
+                openEnquiry({
+                  industry: currentIndustry?.name,
+                  source: currentIndustry
+                    ? `header-${currentIndustry.slug}`
+                    : "header",
+                })
+              }
+              className="hidden h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-brand-yellow px-5 text-[13px] font-extrabold text-navy-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-yellow-soft sm:inline-flex"
             >
-              Contact Us
+              {isIndustryRoute ? "Enquire Now" : "Contact Us"}
               <ArrowUpRight className="h-4 w-4" strokeWidth={2.6} />
             </button>
 
@@ -150,7 +175,7 @@ export function Header() {
               onClick={() => setMenuOpen(true)}
               aria-label="Open navigation menu"
               aria-expanded={menuOpen}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/10 lg:hidden"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/10 xl:hidden"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -162,7 +187,7 @@ export function Header() {
 
       <div
         className={cn(
-          "fixed inset-0 z-[70] lg:hidden",
+          "fixed inset-0 z-[70] xl:hidden",
           menuOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
         aria-hidden={!menuOpen}

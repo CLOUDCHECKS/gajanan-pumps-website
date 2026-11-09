@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form";
 import { CheckCircle2, Loader2, Send, X } from "lucide-react";
 import { products } from "@/lib/products";
 import { enquirySchema, type EnquiryInput } from "@/lib/validation";
+import { lockBodyScroll } from "@/lib/scroll-lock";
 import { cn } from "@/lib/utils";
 
 type EnquiryModalProps = {
   open: boolean;
   product?: string;
+  industry?: string;
   source?: string;
   onClose: () => void;
 };
@@ -21,6 +23,7 @@ const FOCUSABLE =
 export function EnquiryModal({
   open,
   product,
+  industry,
   source,
   onClose,
 }: EnquiryModalProps) {
@@ -65,9 +68,14 @@ export function EnquiryModal({
       message: "",
     });
     setValue("product", product ?? "");
+    setValue(
+      "message",
+      industry
+        ? `I would like to discuss a pumping solution for the ${industry} industry.\n\n`
+        : "",
+    );
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const releaseScrollLock = lockBodyScroll();
 
     const timer = window.setTimeout(() => firstFieldRef.current?.focus(), 80);
 
@@ -101,10 +109,10 @@ export function EnquiryModal({
 
     return () => {
       window.clearTimeout(timer);
-      document.body.style.overflow = previousOverflow;
+      releaseScrollLock();
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open, product, reset, setValue, onClose]);
+  }, [open, product, industry, reset, setValue, onClose]);
 
   if (!open) return null;
 
@@ -150,7 +158,7 @@ export function EnquiryModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative my-0 w-full max-w-[620px] overflow-hidden rounded-t-3xl bg-white shadow-modal animate-fade-up sm:my-6 sm:rounded-3xl"
+        className="relative my-0 max-h-[100dvh] w-full max-w-[620px] overflow-y-auto overscroll-contain rounded-t-3xl bg-white shadow-modal animate-fade-up sm:my-6 sm:max-h-[calc(100dvh-3rem)] sm:rounded-3xl"
       >
         <div className="relative overflow-hidden bg-navy-900 px-6 pb-6 pt-7 text-white sm:px-8">
           <div
@@ -179,6 +187,11 @@ export function EnquiryModal({
               Tell us about your fluid, duty point and application. Our team will
               get back to you with the right pump configuration.
             </p>
+          )}
+          {!submitted && industry && (
+            <span className="mt-3 inline-flex items-center rounded-full border border-brand-yellow/30 bg-brand-yellow/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-yellow">
+              Industry · {industry}
+            </span>
           )}
         </div>
 
