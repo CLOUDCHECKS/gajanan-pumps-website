@@ -119,9 +119,25 @@ export async function POST(request: NextRequest) {
   const supabase = getSupabaseServerClient();
 
   if (!supabase) {
+    // On Netlify the local file fallback is ephemeral, so never acknowledge an
+    // enquiry that cannot be stored. Surface the problem instead of losing it.
+    if (process.env.NETLIFY === "true") {
+      console.error(
+        "[enquiries] Supabase is not configured in production — enquiry rejected.",
+      );
+      return NextResponse.json(
+        {
+          ok: false,
+          message:
+            "Our enquiry system is temporarily unavailable. Please call +91 82991 06938 or email contact@gajananpumps.com.",
+        },
+        { status: 503 },
+      );
+    }
+
     await persistLocally(record);
     console.warn(
-      "[enquiries] Supabase is not configured — enquiry accepted but not persisted remotely.",
+      "[enquiries] Supabase is not configured — enquiry saved to the local fallback.",
     );
     return NextResponse.json({ ok: true, persisted: false });
   }

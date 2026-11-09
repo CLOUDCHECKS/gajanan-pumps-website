@@ -2,8 +2,9 @@ import type { MetadataRoute } from "next";
 import { products } from "@/lib/products";
 import { industries } from "@/lib/industries";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.gajananpumps.com";
+const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.gajananpumps.com"
+).replace(/\/+$/, "");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

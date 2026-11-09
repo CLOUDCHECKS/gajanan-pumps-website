@@ -1,8 +1,9 @@
 # Private admin CRM setup
 
 The public website works without Supabase by falling back to
-`.data/enquiries.jsonl` in local development. The private CRM at
-`/gajananadmin` needs Supabase.
+`.data/enquiries.jsonl` in local development. On Netlify the fallback is not
+durable, so the form refuses to accept an enquiry until Supabase is configured.
+The private CRM at `/gajananadmin` needs Supabase.
 
 ## 1. Create the database
 

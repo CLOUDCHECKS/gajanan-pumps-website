@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Info } from "lucide-react";
+import { ExternalLink, Info } from "lucide-react";
 import { selectionRows } from "@/lib/engineering";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -167,14 +167,26 @@ export function PumpSelectionGuide() {
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.32fr)_minmax(300px,0.68fr)]">
             <figure className="overflow-hidden rounded-[24px] border border-navy-100/80 bg-[#F8FBFF] p-3 shadow-[0_24px_60px_-55px_rgba(2,27,61,0.5)] sm:rounded-[30px] sm:p-5">
               <div className="overflow-hidden rounded-[18px] border border-navy-100/70 bg-white">
-                <Image
-                  src="/images/engineering/pump-selection-graph.png"
-                  alt="Pump selection graphs showing capacity against pressure with speed and viscosity zones, plus a theoretical performance curve for water-like media"
-                  width={1558}
-                  height={1052}
-                  sizes="(min-width: 1024px) 900px, 92vw"
-                  className="h-auto w-full"
-                />
+                <a
+                  href="/images/engineering/pump-selection-graph.png"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the pump selection graph at full size"
+                  className="group relative block focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:ring-offset-2"
+                >
+                  <Image
+                    src="/images/engineering/pump-selection-graph.png"
+                    alt="Pump selection graphs showing capacity against pressure with speed and viscosity zones, plus a theoretical performance curve for water-like media"
+                    width={1558}
+                    height={1052}
+                    sizes="(min-width: 1024px) 900px, 92vw"
+                    className="h-auto w-full"
+                  />
+                  <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-navy-900/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm transition-colors group-hover:bg-navy-900">
+                    View full size
+                    <ExternalLink className="h-3 w-3" strokeWidth={2.4} />
+                  </span>
+                </a>
               </div>
               <figcaption className="mt-3 flex items-start gap-2.5 px-1 text-[11.5px] leading-relaxed text-slate-500">
                 <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-yellow-deep" />
